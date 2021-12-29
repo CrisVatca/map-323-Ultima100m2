@@ -1,4 +1,4 @@
-package ro.ubbcluj.map.map323ultima100m2;
+package ro.ubbcluj.map;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

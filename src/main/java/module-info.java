@@ -1,9 +1,10 @@
-module ro.ubbcluj.map.map323ultima100m2 {
+module ro.ubbcluj.map {
     requires javafx.controls;
     requires javafx.fxml;
 
     requires com.dlsc.formsfx;
+    requires java.sql;
 
-    opens ro.ubbcluj.map.map323ultima100m2 to javafx.fxml;
-    exports ro.ubbcluj.map.map323ultima100m2;
+    opens ro.ubbcluj.map to javafx.fxml;
+    exports ro.ubbcluj.map;
 }

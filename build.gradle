@@ -23,8 +23,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'ro.ubbcluj.map.map323ultima100m2'
-    mainClass = 'ro.ubbcluj.map.map323ultima100m2.HelloApplication'
+    mainModule = 'ro.ubbcluj.map'
+    mainClass = 'ro.ubbcluj.map.HelloApplication'
 }
 
 javafx {

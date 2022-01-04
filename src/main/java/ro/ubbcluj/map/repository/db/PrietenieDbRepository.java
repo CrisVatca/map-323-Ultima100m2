@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class PrietenieDbRepository implements Repository<Long, Prietenie> {
-    private String url;
-    private String username;
-    private String password;
-    private Validator<Prietenie> validator;
+    private final String url;
+    private final String username;
+    private final String password;
+    private final Validator<Prietenie> validator;
 
     public PrietenieDbRepository(String url, String username, String password, Validator<Prietenie> validator) {
         this.url = url;

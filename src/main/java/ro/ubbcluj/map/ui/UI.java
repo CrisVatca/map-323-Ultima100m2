@@ -144,8 +144,8 @@ public class UI {
                     this.service.raspundereCerere(idFrom, idTo, false);
 
             }
-        } catch (KeyException e) {
-            e.printStackTrace();
+        } catch (KeyException | ValidationException e) {
+            System.out.println(e.getMessage());
         } catch (InputMismatchException e) {
             System.out.println("Format incorect al datelor!");
         }

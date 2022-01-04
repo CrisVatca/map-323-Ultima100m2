@@ -1,6 +1,7 @@
 package ro.ubbcluj.map.repository.db;
 
 import ro.ubbcluj.map.domain.Cerere;
+import ro.ubbcluj.map.domain.validators.Validator;
 import ro.ubbcluj.map.repository.Repository;
 
 import java.sql.*;
@@ -10,14 +11,16 @@ import java.util.Map;
 import java.util.Set;
 
 public class CerereDbRepository implements Repository<Long, Cerere> {
-    private String url;
-    private String username;
-    private String password;
+    private final String url;
+    private final String username;
+    private final String password;
+    private final Validator<Cerere> validator;
 
-    public CerereDbRepository(String url, String username, String password) {
+    public CerereDbRepository(String url, String username, String password, Validator<Cerere> validator) {
         this.url = url;
         this.username = username;
         this.password = password;
+        this.validator = validator;
     }
 
     @Override

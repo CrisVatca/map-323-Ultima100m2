@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MessageDbRepository implements Repository<Long, Message> {
-    private String url;
-    private String username;
-    private String password;
+    private final String url;
+    private final String username;
+    private final String password;
     private Repository<Long, Utilizator> repoUtilizatori;
-    private Validator<Message> validator;
+    private final Validator<Message> validator;
 
     public MessageDbRepository(String url, String username, String password, Validator<Message> validator) {
         this.url = url;

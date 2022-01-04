@@ -1,8 +1,8 @@
 package ro.ubbcluj.map.domain;
 
 public class Cerere extends Entity<Long> {
-    private Long idFrom;
-    private Long idTo;
+    private final Long idFrom;
+    private final Long idTo;
     private String status;
 
 

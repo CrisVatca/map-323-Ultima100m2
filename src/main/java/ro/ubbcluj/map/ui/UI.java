@@ -25,7 +25,11 @@ public class UI {
         String firstName = sc.nextLine();
         System.out.println("Dati numele utilizatorului de adaugat: ");
         String lastName = sc.nextLine();
-        this.service.addUser(firstName, lastName);
+        System.out.println("Dati username-ul utilizatorului de adaugat: ");
+        String userName = sc.nextLine();
+        System.out.println("Dati o parola pentru username: ");
+        String password = sc.nextLine();
+        this.service.addUser(firstName, lastName, userName, password);
         System.out.println("Utilizatorul a fost adaugat!");
     }
 
@@ -52,7 +56,11 @@ public class UI {
             String firstName = sc.nextLine();
             System.out.println("Dati noul nume al utilizatorului: ");
             String lastName = sc.nextLine();
-            this.service.updateUser(id, firstName, lastName);
+            System.out.println("Dati noul username al utilizatorului: ");
+            String userName = sc.nextLine();
+            System.out.println("Dati noua parola a utilizatorului: ");
+            String password = sc.nextLine();
+            this.service.updateUser(id, firstName, lastName, userName, password);
             System.out.println("Utilizatorul a fost modificat!");
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());

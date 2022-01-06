@@ -7,15 +7,13 @@ import ro.ubbcluj.map.domain.Utilizator;
 import ro.ubbcluj.map.domain.validators.ValidationException;
 import ro.ubbcluj.map.repository.Repository;
 import ro.ubbcluj.map.utils.Graph;
-
-import java.math.BigInteger;
 import java.security.KeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static ro.ubbcluj.map.utils.MD5.getMd5;
 
 public class Service {
     private final Repository<Long, Utilizator> repoUtilizatori;
@@ -29,34 +27,6 @@ public class Service {
         this.repoPrietenie = repoPrietenie;
         this.repoMessage = repoMessage;
         this.repoCerere = repoCerere;
-    }
-
-    public static String getMd5(String input)
-    {
-        try {
-
-            // Static getInstance method is called with hashing MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // digest() method is called to calculate message digest
-            //  of an input digest() return array of byte
-            byte[] messageDigest = md.digest(input.getBytes());
-
-            // Convert byte array into signum representation
-            BigInteger no = new BigInteger(1, messageDigest);
-
-            // Convert message digest into hex value
-            String hashtext = no.toString(16);
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        }
-
-        // For specifying wrong message digest algorithms
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void addUser(String firstName, String lastName, String userName, String password) {

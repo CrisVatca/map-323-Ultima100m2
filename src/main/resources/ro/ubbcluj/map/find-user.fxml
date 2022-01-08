@@ -45,4 +45,5 @@
          <Button layoutX="468.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="51.0" style="-fx-background-color: #FFD700;" text="Inapoi" />
         </children>
     </AnchorPane>
+   <Button layoutX="451.0" layoutY="183.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="62.0" text="Delete" />
 </AnchorPane>

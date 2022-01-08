@@ -37,24 +37,16 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        registerButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(passwordField.getText().equals(confirmPasswordField.getText())){
-                    UserDbUtils.signUpUser(event, firstNameField.getText(), lastNameField.getText(), usernameField.getText(),
-                            passwordField.getText());
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Parolele nu coincid!");
-                    alert.show();
-                }
+        registerButton.setOnAction(event -> {
+            if(passwordField.getText().equals(confirmPasswordField.getText())){
+                UserDbUtils.signUpUser(event, firstNameField.getText(), lastNameField.getText(), usernameField.getText(),
+                        passwordField.getText());
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Parolele nu coincid!");
+                alert.show();
             }
         });
-        closeButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                UserDbUtils.changeScene(event, "log-in.fxml", "LogIn", usernameField.getText());
-            }
-        });
+        closeButton.setOnAction(event -> UserDbUtils.changeScene(event, "log-in.fxml", "LogIn", usernameField.getText()));
     }
 }

@@ -39,7 +39,8 @@ public class UserDbUtils {
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
-        stage.setScene(new Scene(Objects.requireNonNull(root), 500, 450));
+        assert root != null;
+        stage.setScene(new Scene(root, 500, 450));
     }
 
 
@@ -59,7 +60,7 @@ public class UserDbUtils {
                 while (resultSet.next()){
                     String password2 = resultSet.getString("password");
                     if(password2.equals(getMd5(password1))){
-                        changeScene(event, "", "Profile", username1);
+                        changeScene(event, "user-profile.fxml", "Profile", username1);
                     } else {
                         System.out.println("Parola nu corespunde!");
                         Alert alert = new Alert(Alert.AlertType.ERROR);

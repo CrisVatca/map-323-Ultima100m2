@@ -151,27 +151,39 @@ public class Service {
         }
     }
 
-    public void trimiteCerere(Long idFrom, Long idTo) throws KeyException {
+    public Utilizator getUserAfterUserName(String username){
+        for(Utilizator u:getUsers()){
+            if(u.getUserName().equals(username)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void trimiteCerere(String userNameFrom, String userNameTo) throws KeyException {
 
         for (Cerere cerere : this.repoCerere.findAll())
-            if ((cerere.getIdFrom().equals(idFrom) && cerere.getIdTo().equals(idTo)) || (cerere.getIdFrom().equals(idTo) && cerere.getIdTo().equals(idFrom)))
+            if ((cerere.getUserNameFrom().equals(userNameFrom) && cerere.getUserNameTo().equals(userNameTo))
+                    || (cerere.getUserNameFrom().equals(userNameTo) && cerere.getUserNameTo().equals(userNameFrom)))
                 throw new KeyException("Cererea de prietenie exista deja!");
 
-        Utilizator utilizator1 = this.repoUtilizatori.findOne(idFrom);
-        Utilizator utilizator2 = this.repoUtilizatori.findOne(idTo);
+        Utilizator utilizator1 = getUserAfterUserName(userNameFrom);
+        Utilizator utilizator2 = getUserAfterUserName(userNameTo);
         if (utilizator1 == null || utilizator2 == null)
             throw new NullPointerException("Utilizatorii trebuie sa existe!");
 
-        Cerere cerere = new Cerere(idFrom, idTo, "pending");
+        LocalDateTime datenow = LocalDateTime.now();
+
+        Cerere cerere = new Cerere(userNameFrom, userNameTo, "pending",datenow);
         this.repoCerere.save(cerere);
     }
 
-    public void raspundereCerere(Long idFrom, Long idTo, boolean accepted) throws KeyException {
+    public void raspundereCerere(String userNameFrom, String userNameTo, boolean accepted) throws KeyException {
 
         Cerere cererePrietenie = null;
 
         for (Cerere cerere : this.repoCerere.findAll())
-            if (cerere.getIdFrom().equals(idFrom) && cerere.getIdTo().equals(idTo))
+            if (cerere.getUserNameFrom().equals(userNameFrom) && cerere.getUserNameTo().equals(userNameTo))
                 cererePrietenie = cerere;
 
         if (cererePrietenie == null)
@@ -179,7 +191,9 @@ public class Service {
 
         if (accepted) {
             cererePrietenie.setStatus("approved");
-            addFriend(idFrom, idTo, LocalDateTime.now());
+            Utilizator u1 = getUserAfterUserName(userNameFrom);
+            Utilizator u2 = getUserAfterUserName(userNameTo);
+            addFriend(u1.getId(), u2.getId(), LocalDateTime.now());
         } else
             cererePrietenie.setStatus("rejected");
 

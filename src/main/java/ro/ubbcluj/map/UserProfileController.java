@@ -66,7 +66,7 @@ public class UserProfileController implements Initializable {
             alert.show();
         }
         signOutButton.setOnAction(event -> UserDbUtils.changeScene(event, "log-in.fxml", "LogIn", usernameLabel.getText()));
-        friendRequestButton.setOnAction(event -> UserDbUtils.changeScene(event, "", "", usernameLabel.getText()));
+        friendRequestButton.setOnAction(event -> UserDbUtils.changeScene(event, "requests.fxml", "All Requests", usernameLabel.getText()));
         myFriendsButton.setOnAction(event -> {
             UserDbUtils.changeScene(event, "find-user.fxml", "FindUser", usernameLabel.getText());
             //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(""));

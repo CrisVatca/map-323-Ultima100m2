@@ -8,11 +8,11 @@ public class CerereValidator implements Validator<Cerere>{
         if(entity.getId() == null){
             throw new ValidationException("Id-ul entitatii nu poate fi null!");
         }
-        if(entity.getIdFrom() == null){
-            throw new ValidationException("Id-ul utilizatorului de la care se primeste cererea trebuie sa existe!");
+        if(entity.getUserNameFrom() == null){
+            throw new ValidationException("Username-ul utilizatorului de la care se primeste cererea trebuie sa existe!");
         }
-        if(entity.getIdTo() == null){
-            throw new ValidationException("Id-ul utilizatorului la care se trimite cererea trebuie sa existe!");
+        if(entity.getUserNameTo() == null){
+            throw new ValidationException("Username-ul utilizatorului la care se trimite cererea trebuie sa existe!");
         }
         if(!"approved".equals(entity.getStatus()) && !"pending".equals(entity.getStatus()) &&
                 !"rejected".equals(entity.getStatus())){

@@ -12,38 +12,38 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="437.0" prefWidth="501.0" style="-fx-background-color: #FFD700;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.map.">
-    <TableView fx:id="friendsTable" layoutX="-4.0" layoutY="217.0" prefHeight="233.0" prefWidth="523.0">
+<AnchorPane prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #FFD700;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.map.FindUserController">
+    <TableView fx:id="friendsTable" layoutX="2.0" layoutY="223.0" prefHeight="227.0" prefWidth="500.0">
       <columns>
-          <TableColumn fx:id="firstNameColumn" prefWidth="183.0" text="First Name" />
-          <TableColumn fx:id="lastNameColumn" prefWidth="189.0" text="Last Name" />
-          <TableColumn fx:id="usernameColumn" prefWidth="150.0" text="Username" />
+          <TableColumn fx:id="firstNameColumn" prefWidth="169.0" text="First Name" />
+          <TableColumn fx:id="lastNameColumn" prefWidth="181.0" text="Last Name" />
+          <TableColumn fx:id="usernameColumn" prefWidth="172.0" text="Username" />
       </columns>
         <effect>
           <DropShadow />
         </effect>
     </TableView>
-    <TextField fx:id="searchFriendField" layoutX="41.0" layoutY="128.0" prefHeight="32.0" prefWidth="183.0" promptText="Cauta un utilizator" style="-fx-background-radius: 15;">
+    <TextField fx:id="searchFriendField" layoutX="41.0" layoutY="128.0" prefHeight="32.0" prefWidth="183.0" promptText="Name of the friend" style="-fx-background-radius: 15;">
         <effect>
           <DropShadow />
         </effect>
     </TextField>
-    <Button fx:id="searchButton" layoutX="254.0" layoutY="127.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="62.0" style="-fx-background-color: #000000;" />
+    <Button fx:id="searchButton" layoutX="258.0" layoutY="128.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="57.0" style="-fx-background-color: #000000;" text="Search" textFill="WHITE" />
     <Line endX="399.0" fill="#0d0d0d" layoutX="100.0" layoutY="89.0" startX="-100.0" />
-    <ImageView fitHeight="44.0" fitWidth="43.0" layoutX="264.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="searchImage" fitHeight="39.0" fitWidth="32.0" layoutX="183.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@../../../../../../../../Desktop/lupa3.png" />
+          <Image url="@images/lupa3.png" />
         </image>
     </ImageView>
-    <AnchorPane prefHeight="90.0" prefWidth="519.0" style="-fx-background-color: #000000;">
+    <AnchorPane prefHeight="90.0" prefWidth="500.0" style="-fx-background-color: #000000;">
         <children>
           <Label layoutX="87.0" layoutY="29.0" text="Cristina Vatca" textFill="#fffb0c">
               <font>
                   <Font name="Arial Bold Italic" size="28.0" />
               </font>
           </Label>
-         <Button layoutX="468.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="51.0" style="-fx-background-color: #FFD700;" text="Inapoi" />
+         <Button fx:id="backButton" layoutX="454.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="51.0" style="-fx-background-color: #FFD700;" text="Back" />
         </children>
     </AnchorPane>
-   <Button layoutX="451.0" layoutY="183.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="62.0" text="Delete" />
+   <Button fx:id="deleteButton" layoutX="384.0" layoutY="177.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="107.0" style="-fx-background-color: #000000;" text="Delete friend" textFill="#f8f6f6" />
 </AnchorPane>

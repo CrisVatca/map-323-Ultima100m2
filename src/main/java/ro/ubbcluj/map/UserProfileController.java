@@ -1,7 +1,6 @@
 package ro.ubbcluj.map;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import ro.ubbcluj.map.domain.Cerere;
@@ -70,8 +69,6 @@ public class UserProfileController implements Initializable {
         friendRequestButton.setOnAction(event -> UserDbUtils.changeScene(event, "", "", usernameLabel.getText()));
         myFriendsButton.setOnAction(event -> {
             UserDbUtils.changeScene(event, "find-user.fxml", "FindUser", usernameLabel.getText());
-            FXMLLoader fxmlLoader = new FXMLLoader(FindUserController.class.getResource("find-user.fxml"));
-            fxmlLoader.<FindUserController>getController().setService(this.service);
         });
     }
 

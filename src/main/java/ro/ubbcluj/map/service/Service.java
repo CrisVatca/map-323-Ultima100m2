@@ -7,12 +7,13 @@ import ro.ubbcluj.map.domain.Utilizator;
 import ro.ubbcluj.map.domain.validators.ValidationException;
 import ro.ubbcluj.map.repository.Repository;
 import ro.ubbcluj.map.utils.Graph;
-
 import java.security.KeyException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static ro.ubbcluj.map.utils.MD5.getMd5;
 
 public class Service {
     private final Repository<Long, Utilizator> repoUtilizatori;
@@ -28,8 +29,8 @@ public class Service {
         this.repoCerere = repoCerere;
     }
 
-    public void addUser(String firstName, String lastName) {
-        Utilizator utilizator = new Utilizator(firstName, lastName);
+    public void addUser(String firstName, String lastName, String userName, String password) {
+        Utilizator utilizator = new Utilizator(firstName, lastName, userName, getMd5(password));
         this.repoUtilizatori.save(utilizator);
     }
 
@@ -56,12 +57,12 @@ public class Service {
         }
     }
 
-    public void updateUser(Long id, String firstName, String lastName) {
+    public void updateUser(Long id, String firstName, String lastName, String userName, String password) {
         try {
             Utilizator u = this.repoUtilizatori.findOne(id);
             if (u == null)
                 throw new NullPointerException("Utilizatorul nu poate fi modificat deoarece acesta nu exista");
-            Utilizator user = new Utilizator(firstName, lastName);
+            Utilizator user = new Utilizator(firstName, lastName, userName, password);
             user.setId(id);
             this.repoUtilizatori.update(user);
         } catch (NullPointerException e) {
@@ -150,27 +151,51 @@ public class Service {
         }
     }
 
-    public void trimiteCerere(Long idFrom, Long idTo) throws KeyException {
+    public Utilizator getUserAfterUserName(String username){
+        for(Utilizator u:getUsers()){
+            if(u.getUserName().equals(username)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public boolean existaCererea(Cerere cerere){
+        for(Cerere c:getCereri()){
+            if(c.getUserNameFrom().equals(cerere.getUserNameFrom()) && c.getUserNameTo().equals(cerere.getUserNameTo()) ||
+                    c.getUserNameFrom().equals(cerere.getUserNameTo()) && c.getUserNameTo().equals(cerere.getUserNameFrom())) {
+                if (!Objects.equals(c.getStatus(), "rejected")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void trimiteCerere(String userNameFrom, String userNameTo) throws KeyException {
 
         for (Cerere cerere : this.repoCerere.findAll())
-            if ((cerere.getIdFrom().equals(idFrom) && cerere.getIdTo().equals(idTo)) || (cerere.getIdFrom().equals(idTo) && cerere.getIdTo().equals(idFrom)))
+            if ((cerere.getUserNameFrom().equals(userNameFrom) && cerere.getUserNameTo().equals(userNameTo) && !Objects.equals(cerere.getStatus(), "rejected"))
+                    || (cerere.getUserNameFrom().equals(userNameTo) && cerere.getUserNameTo().equals(userNameFrom) && !Objects.equals(cerere.getStatus(), "rejected")))
                 throw new KeyException("Cererea de prietenie exista deja!");
 
-        Utilizator utilizator1 = this.repoUtilizatori.findOne(idFrom);
-        Utilizator utilizator2 = this.repoUtilizatori.findOne(idTo);
+        Utilizator utilizator1 = getUserAfterUserName(userNameFrom);
+        Utilizator utilizator2 = getUserAfterUserName(userNameTo);
         if (utilizator1 == null || utilizator2 == null)
             throw new NullPointerException("Utilizatorii trebuie sa existe!");
 
-        Cerere cerere = new Cerere(idFrom, idTo, "pending");
+        LocalDateTime datenow = LocalDateTime.now();
+
+        Cerere cerere = new Cerere(userNameFrom, userNameTo, "pending",datenow);
         this.repoCerere.save(cerere);
     }
 
-    public void raspundereCerere(Long idFrom, Long idTo, boolean accepted) throws KeyException {
+    public void raspundereCerere(String userNameFrom, String userNameTo, boolean accepted) throws KeyException {
 
         Cerere cererePrietenie = null;
 
         for (Cerere cerere : this.repoCerere.findAll())
-            if (cerere.getIdFrom().equals(idFrom) && cerere.getIdTo().equals(idTo))
+            if (cerere.getUserNameFrom().equals(userNameFrom) && cerere.getUserNameTo().equals(userNameTo))
                 cererePrietenie = cerere;
 
         if (cererePrietenie == null)
@@ -178,7 +203,9 @@ public class Service {
 
         if (accepted) {
             cererePrietenie.setStatus("approved");
-            addFriend(idFrom, idTo, LocalDateTime.now());
+            Utilizator u1 = getUserAfterUserName(userNameFrom);
+            Utilizator u2 = getUserAfterUserName(userNameTo);
+            addFriend(u1.getId(), u2.getId(), LocalDateTime.now());
         } else
             cererePrietenie.setStatus("rejected");
 

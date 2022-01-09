@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class UtilizatorDbRepository implements Repository<Long, Utilizator> {
-    private String url;
-    private String username;
-    private String password;
-    private Validator<Utilizator> validator;
+    private final String url;
+    private final String username;
+    private final String password;
+    private final Validator<Utilizator> validator;
 
     public UtilizatorDbRepository(String url, String username, String password, Validator<Utilizator> validator) {
         this.url = url;
@@ -46,8 +46,10 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator> {
                 Long id = resultSet.getLong("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
+                String userName = resultSet.getString("user_name");
+                String password = resultSet.getString("password");
 
-                Utilizator utilizator = new Utilizator(firstName, lastName);
+                Utilizator utilizator = new Utilizator(firstName, lastName, userName, password);
                 utilizator.setId(id);
                 return utilizator;
             }
@@ -67,8 +69,10 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator> {
                 Long id = resultSet.getLong("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
+                String userName = resultSet.getString("user_name");
+                String password = resultSet.getString("password");
 
-                Utilizator utilizator = new Utilizator(firstName, lastName);
+                Utilizator utilizator = new Utilizator(firstName, lastName, userName, password);
                 utilizator.setId(id);
 
                 users.add(getEntity(utilizator));
@@ -116,13 +120,15 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator> {
     @Override
     public Utilizator save(Utilizator entity) {
 
-        String sql = "insert into utilizatori (first_name, last_name) values (?, ?)";
+        String sql = "insert into utilizatori (first_name, last_name, user_name, password) values (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, entity.getFirstName());
             ps.setString(2, entity.getLastName());
+            ps.setString(3, entity.getUserName());
+            ps.setString(4, entity.getPassword());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -146,13 +152,15 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator> {
 
     @Override
     public Utilizator update(Utilizator entity) {
-        String sql = "update utilizatori set first_name = ?, last_name = ? where id = ?";
+        String sql = "update utilizatori set first_name = ?, last_name = ?, user_name = ?, password = ? where id = ?";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, entity.getFirstName());
             ps.setString(2, entity.getLastName());
-            ps.setLong(3, entity.getId());
+            ps.setString(3, entity.getUserName());
+            ps.setString(4, entity.getPassword());
+            ps.setLong(5, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

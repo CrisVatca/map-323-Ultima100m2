@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #FFD700;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.map.UserProfileController">
+    <Label fx:id="nameLabel" layoutX="244.0" layoutY="45.0" prefHeight="121.0" prefWidth="236.0" style="-fx-background-color: #FFD700;" text="Cristina Vatca" textAlignment="CENTER">
+        <font>
+          <Font name="Arial" size="36.0" />
+        </font>
+    </Label>
+    <Button fx:id="myFriendsButton" layoutX="43.0" layoutY="307.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="170.0" style="-fx-background-color: #000000;" text="Prietenii mei" textFill="WHITE">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></Button>
+    <Button fx:id="friendRequestButton" layoutX="294.0" layoutY="307.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="159.0" style="-fx-background-color: #000000;" text="Cereri de prietenie" textFill="WHITE">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></Button>
+    <Label fx:id="usernameLabel" layoutX="293.0" layoutY="166.0" style="-fx-background-color: #FFD700;" text="vatcacristina88">
+        <font>
+          <Font name="System Bold Italic" size="18.0" />
+        </font>
+    </Label>
+    <Circle layoutX="126.0" layoutY="125.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+    <Label layoutX="67.0" layoutY="59.0" prefHeight="121.0" prefWidth="183.0" text="+photo" textFill="WHITE">
+        <font>
+          <Font size="36.0" />
+        </font>
+    </Label>
+    <Button fx:id="signOutButton" layoutX="434.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="67.0" style="-fx-background-color: #000000;" text="SignOut" textFill="WHITE" />
+</AnchorPane>

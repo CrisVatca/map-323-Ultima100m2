@@ -21,7 +21,7 @@ public class UtilizatorFileRepository extends AbstractFileRepository<Long, Utili
         if (currentId > nextId) {
             nextId = currentId;
         }
-        Utilizator u = new Utilizator(attributes.get(1), attributes.get(2));
+        Utilizator u = new Utilizator(attributes.get(1), attributes.get(2), attributes.get(3), attributes.get(4));
         u.setId(Long.parseLong(attributes.get(0)));
         return u;
     }

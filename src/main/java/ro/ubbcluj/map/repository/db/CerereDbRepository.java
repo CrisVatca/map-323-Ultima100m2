@@ -1,23 +1,27 @@
 package ro.ubbcluj.map.repository.db;
 
 import ro.ubbcluj.map.domain.Cerere;
+import ro.ubbcluj.map.domain.validators.Validator;
 import ro.ubbcluj.map.repository.Repository;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class CerereDbRepository implements Repository<Long, Cerere> {
-    private String url;
-    private String username;
-    private String password;
+    private final String url;
+    private final String username;
+    private final String password;
+    private final Validator<Cerere> validator;
 
-    public CerereDbRepository(String url, String username, String password) {
+    public CerereDbRepository(String url, String username, String password, Validator<Cerere> validator) {
         this.url = url;
         this.username = username;
         this.password = password;
+        this.validator = validator;
     }
 
     @Override
@@ -28,6 +32,19 @@ public class CerereDbRepository implements Repository<Long, Cerere> {
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, aLong);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String userNameFrom = resultSet.getString("user1");
+                String userNameTo = resultSet.getString("user2");
+                String status = resultSet.getString("status");
+                Timestamp timestamp = resultSet.getTimestamp("date");
+                LocalDateTime date = timestamp.toLocalDateTime();
+
+                Cerere cerere = new Cerere(userNameFrom, userNameTo, status,date);
+                cerere.setId(id);
+                return cerere;
+            }
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -44,11 +61,13 @@ public class CerereDbRepository implements Repository<Long, Cerere> {
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
-                Long idFrom = resultSet.getLong("idfrom");
-                Long idTo = resultSet.getLong("idto");
+                String userNameFrom = resultSet.getString("user1");
+                String userNameTo = resultSet.getString("user2");
                 String status = resultSet.getString("status");
+                Timestamp timestamp = resultSet.getTimestamp("date");
+                LocalDateTime date = timestamp.toLocalDateTime();;
 
-                Cerere cerere = new Cerere(idFrom, idTo, status);
+                Cerere cerere = new Cerere(userNameFrom, userNameTo, status,date);
                 cerere.setId(id);
                 cereri.add(cerere);
             }
@@ -61,14 +80,15 @@ public class CerereDbRepository implements Repository<Long, Cerere> {
 
     @Override
     public Cerere save(Cerere entity) {
-        String sql = "insert into cerere (idFrom, idTo, status) values (?, ?, ?)";
+        String sql = "insert into cerere (user1, user2, status, date) values (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setLong(1, entity.getIdFrom());
-            ps.setLong(2, entity.getIdTo());
+            ps.setString(1, entity.getUserNameFrom());
+            ps.setString(2, entity.getUserNameTo());
             ps.setString(3, entity.getStatus());
+            ps.setTimestamp(4, Timestamp.valueOf(entity.getDate()));
 
             ps.executeUpdate();
         } catch (SQLException e) {

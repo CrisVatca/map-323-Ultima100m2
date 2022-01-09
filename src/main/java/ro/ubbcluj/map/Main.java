@@ -5,6 +5,7 @@ import ro.ubbcluj.map.domain.Cerere;
 import ro.ubbcluj.map.domain.Message;
 import ro.ubbcluj.map.domain.Prietenie;
 import ro.ubbcluj.map.domain.Utilizator;
+import ro.ubbcluj.map.domain.validators.CerereValidator;
 import ro.ubbcluj.map.domain.validators.MessageValidator;
 import ro.ubbcluj.map.domain.validators.PrietenieValidator;
 import ro.ubbcluj.map.domain.validators.UtilizatorValidator;
@@ -21,8 +22,9 @@ public class Main {
         UtilizatorValidator validator = new UtilizatorValidator();
         PrietenieValidator validator1 = new PrietenieValidator();
         MessageValidator validator2 = new MessageValidator();
+        CerereValidator validator3 = new CerereValidator();
 
-        Repository<Long, Cerere> repoCerere = new CerereDbRepository("jdbc:postgresql://localhost:5432/db", "postgres", "compunere");
+        Repository<Long, Cerere> repoCerere = new CerereDbRepository("jdbc:postgresql://localhost:5432/db", "postgres", "compunere", validator3);
         Repository<Long, Utilizator> repoUtilizatori = new UtilizatorDbRepository("jdbc:postgresql://localhost:5432/db", "postgres", "compunere", validator);
         Repository<Long, Prietenie> repoPrietenie = new PrietenieDbRepository("jdbc:postgresql://localhost:5432/db", "postgres", "compunere", validator1);
         Repository<Long, Message> repoMessage = new MessageDbRepository("jdbc:postgresql://localhost:5432/db", "postgres", "compunere", validator2);

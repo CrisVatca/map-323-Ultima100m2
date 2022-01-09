@@ -1,24 +1,43 @@
 package ro.ubbcluj.map.domain;
 
+import java.time.LocalDateTime;
+
 public class Cerere extends Entity<Long> {
-    private Long idFrom;
-    private Long idTo;
+    private String userNameFrom;
+    private String userNameTo;
     private String status;
+    private LocalDateTime date;
 
 
-    public Cerere(Long idFrom, Long idTo, String status) {
-        this.idFrom = idFrom;
-        this.idTo = idTo;
+    public Cerere(String userNameFrom, String userNameTo, String status, LocalDateTime date) {
+        this.userNameFrom = userNameFrom;
+        this.userNameTo = userNameTo;
         this.status = status;
+        this.date = date;
     }
 
-
-    public Long getIdFrom() {
-        return idFrom;
+    public String getUserNameFrom() {
+        return userNameFrom;
     }
 
-    public Long getIdTo() {
-        return idTo;
+    public void setUserNameFrom(String userNameFrom) {
+        this.userNameFrom = userNameFrom;
+    }
+
+    public String getUserNameTo() {
+        return userNameTo;
+    }
+
+    public void setUserNameTo(String userNameTo) {
+        this.userNameTo = userNameTo;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public String getStatus() {
@@ -32,10 +51,11 @@ public class Cerere extends Entity<Long> {
     @Override
     public String toString() {
         return "Cerere{" +
-                "id=" + id +
-                ", idFrom=" + idFrom +
-                ", idTo=" + idTo +
-                ", status=" + status +
+                "userNameFrom='" + userNameFrom + '\'' +
+                ", userNameTo='" + userNameTo + '\'' +
+                ", status='" + status + '\'' +
+                ", date=" + date +
+                ", id=" + id +
                 '}';
     }
 }

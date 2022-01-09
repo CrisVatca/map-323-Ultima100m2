@@ -8,10 +8,14 @@ public class Utilizator extends Entity<Long> {
     private String firstName;
     private String lastName;
     private final List<Utilizator> friends = new ArrayList<>();
+    private String userName;
+    private String password;
 
-    public Utilizator(String firstName, String lastName) {
+    public Utilizator(String firstName, String lastName, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -34,18 +38,32 @@ public class Utilizator extends Entity<Long> {
         return friends;
     }
 
+    public String getUserName(){return userName;}
+
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+
+    public String getPassword(){return password;}
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringOfFriends = new StringBuilder("[");
         for (Utilizator utilizator : friends) {
-            String ut = "{" + utilizator.getId() + "; " + utilizator.firstName + "; " + utilizator.lastName + "} ";
+            String ut = "{" + utilizator.getId() + "; " + utilizator.firstName + "; " + utilizator.lastName + "; " +
+                    utilizator.userName + "} ";
             stringOfFriends.append(ut);
         }
         return "Utilizator{" +
                 "id = " + id + ", " +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", friends=" + stringOfFriends + ']' + '}';
+                ", friends=" + stringOfFriends + ']' +
+                ", userName=" + userName + '}';
     }
 
     @Override
@@ -55,12 +73,14 @@ public class Utilizator extends Entity<Long> {
         Utilizator that = (Utilizator) o;
         return getFirstName().equals(that.getFirstName()) &&
                 getLastName().equals(that.getLastName()) &&
-                getFriends().equals(that.getFriends());
+                getFriends().equals(that.getFriends()) &&
+                getUserName().equals(that.getUserName()) &&
+                getPassword().equals(that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getFriends());
+        return Objects.hash(getFirstName(), getLastName(), getFriends(), getUserName(), getPassword());
     }
 
     public void makeFriend(Utilizator utilizator) {

@@ -25,7 +25,11 @@ public class UI {
         String firstName = sc.nextLine();
         System.out.println("Dati numele utilizatorului de adaugat: ");
         String lastName = sc.nextLine();
-        this.service.addUser(firstName, lastName);
+        System.out.println("Dati username-ul utilizatorului de adaugat: ");
+        String userName = sc.nextLine();
+        System.out.println("Dati o parola pentru username: ");
+        String password = sc.nextLine();
+        this.service.addUser(firstName, lastName, userName, password);
         System.out.println("Utilizatorul a fost adaugat!");
     }
 
@@ -52,7 +56,11 @@ public class UI {
             String firstName = sc.nextLine();
             System.out.println("Dati noul nume al utilizatorului: ");
             String lastName = sc.nextLine();
-            this.service.updateUser(id, firstName, lastName);
+            System.out.println("Dati noul username al utilizatorului: ");
+            String userName = sc.nextLine();
+            System.out.println("Dati noua parola a utilizatorului: ");
+            String password = sc.nextLine();
+            this.service.updateUser(id, firstName, lastName, userName, password);
             System.out.println("Utilizatorul a fost modificat!");
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());
@@ -122,22 +130,26 @@ public class UI {
                 Long idFrom = sc.nextLong();
                 System.out.println("La utilizatorul cu id-ul:");
                 Long idTo = sc.nextLong();
-                this.service.trimiteCerere(idFrom, idTo);
+                String userNameFrom = service.getById(idFrom).getUserName();
+                String userNameTo = service.getById(idTo).getUserName();
+                this.service.trimiteCerere(userNameFrom, userNameTo);
             } else if (optiune == 2) {
                 System.out.println("De la utilizatorul cu id-ul:");
                 Long idFrom = sc.nextLong();
                 System.out.println("La utilizatorul cu id-ul:");
                 Long idTo = sc.nextLong();
                 System.out.println("1.Accepta\n2.Refuza");
+                String userNameFrom = service.getById(idFrom).getUserName();
+                String userNameTo = service.getById(idTo).getUserName();
                 Integer optiune2 = sc.nextInt();
                 if (optiune2 == 1)
-                    this.service.raspundereCerere(idFrom, idTo, true);
+                    this.service.raspundereCerere(userNameFrom, userNameTo, true);
                 else if (optiune2 == 2)
-                    this.service.raspundereCerere(idFrom, idTo, false);
+                    this.service.raspundereCerere(userNameFrom, userNameTo, false);
 
             }
-        } catch (KeyException e) {
-            e.printStackTrace();
+        } catch (KeyException | ValidationException e) {
+            System.out.println(e.getMessage());
         } catch (InputMismatchException e) {
             System.out.println("Format incorect al datelor!");
         }

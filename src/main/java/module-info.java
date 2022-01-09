@@ -7,4 +7,6 @@ module ro.ubbcluj.map {
 
     opens ro.ubbcluj.map to javafx.fxml;
     exports ro.ubbcluj.map;
+    exports ro.ubbcluj.map.domain;
+    exports ro.ubbcluj.map.service;
 }

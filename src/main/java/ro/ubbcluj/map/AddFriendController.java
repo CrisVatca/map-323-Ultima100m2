@@ -6,11 +6,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ro.ubbcluj.map.domain.Cerere;
 import ro.ubbcluj.map.domain.Utilizator;
 import ro.ubbcluj.map.service.Service;
 
 import java.net.URL;
 import java.security.KeyException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddFriendController implements Initializable {
@@ -52,22 +54,33 @@ public class AddFriendController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Utilizatorul nu exista!");
             alert.show();
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Cererea a fost trimisa");
-            alert.show();
-            sendRequest(getFriend());
-            UserDbUtils.changeScene(actionEvent,"requests.fxml","All Requests",user.getUserName());
+        } else {
+            LocalDateTime localDateTime= LocalDateTime.now();
+            Cerere cerere = new Cerere(user.getUserName(),getFriend().getUserName(),"peding",localDateTime);
+            if(service.existaCererea(cerere)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Cererea exista deja");
+                alert.show();
+            }
+            else {
+                sendRequest(getFriend());
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Cererea a fost trimisa");
+                alert.show();
+                UserDbUtils.changeScene(actionEvent,"requests.fxml","All Requests",user.getUserName());
+            }
         }
     }
 
     public void sendRequest(Utilizator friend) throws KeyException {
-        service.trimiteCerere(user.getUserName(),friend.getUserName());
-        System.out.println("Cererea a fost trimisa");
+        try {
+            service.trimiteCerere(user.getUserName(),friend.getUserName());
+            System.out.println("Cererea a fost trimisa");
 
-        handleCancel();
-
+            handleCancel();
+        } catch (KeyException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

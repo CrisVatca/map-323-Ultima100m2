@@ -160,11 +160,23 @@ public class Service {
         return null;
     }
 
+    public boolean existaCererea(Cerere cerere){
+        for(Cerere c:getCereri()){
+            if(c.getUserNameFrom().equals(cerere.getUserNameFrom()) && c.getUserNameTo().equals(cerere.getUserNameTo()) ||
+                    c.getUserNameFrom().equals(cerere.getUserNameTo()) && c.getUserNameTo().equals(cerere.getUserNameFrom())) {
+                if (!Objects.equals(c.getStatus(), "rejected")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void trimiteCerere(String userNameFrom, String userNameTo) throws KeyException {
 
         for (Cerere cerere : this.repoCerere.findAll())
-            if ((cerere.getUserNameFrom().equals(userNameFrom) && cerere.getUserNameTo().equals(userNameTo))
-                    || (cerere.getUserNameFrom().equals(userNameTo) && cerere.getUserNameTo().equals(userNameFrom)))
+            if ((cerere.getUserNameFrom().equals(userNameFrom) && cerere.getUserNameTo().equals(userNameTo) && !Objects.equals(cerere.getStatus(), "rejected"))
+                    || (cerere.getUserNameFrom().equals(userNameTo) && cerere.getUserNameTo().equals(userNameFrom) && !Objects.equals(cerere.getStatus(), "rejected")))
                 throw new KeyException("Cererea de prietenie exista deja!");
 
         Utilizator utilizator1 = getUserAfterUserName(userNameFrom);

@@ -91,7 +91,7 @@ public class RequestsController implements Initializable {
         tableColumnDate.setCellValueFactory(new PropertyValueFactory<Cerere, String>("date"));
         tableView.setItems(model);
 
-        handleBack.setOnAction(event -> UserDbUtils.changeScene(event, "userProfile.fxml", "All Requests", user.getUserName()));
+        handleBack.setOnAction(event -> UserDbUtils.changeScene(event, "user-profile.fxml", "All Requests", user.getUserName()));
     }
 
     public void initModel() {
@@ -115,13 +115,18 @@ public class RequestsController implements Initializable {
         if(cerere!=null){
             if(cerere.getUserNameTo().equals(user.getUserName())){
                 try {
-                    service.raspundereCerere(cerere.getUserNameFrom(), cerere.getUserNameTo(), true);
-                    UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());
-                }catch (ValidationException validationException){
+                    if(cerere.getStatus().equals("pending")){
+                        service.raspundereCerere(cerere.getUserNameFrom(), cerere.getUserNameTo(), true);
+                        UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());
+                    }else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Cererea nu poate fi acceptata");
+                        alert.show();
+                    }
+
+                }catch (KeyException validationException){
                     System.out.println(validationException.toString());
                 }
-
-
             }
         }
     }
@@ -135,10 +140,20 @@ public class RequestsController implements Initializable {
         Cerere cerere = tableView.getSelectionModel().getSelectedItem();
         if(cerere!=null){
             if(cerere.getUserNameTo().equals(user.getUserName())){
-                service.raspundereCerere(cerere.getUserNameFrom(), cerere.getUserNameTo(), false);
+                if(cerere.getStatus().equals("pending")){
+                    try {
+                        service.raspundereCerere(cerere.getUserNameFrom(), cerere.getUserNameTo(), false);
+                        UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());
+                    } catch (KeyException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Cererea nu poate fi refuzata");
+                    alert.show();
+                }
             }
         }
-        UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());
     }
 
     @FXML

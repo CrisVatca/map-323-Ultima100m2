@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ro.ubbcluj.map.RequestsController"
+            prefHeight="400.0" prefWidth="750.0">
+    <children>
+        <SplitPane dividerPositions="0.750965250965251" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <SplitPane prefHeight="329.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <TableView fx:id="tableView" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0"
+                                                   prefWidth="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                                <TableColumn fx:id="tableColumnFromUser" prefWidth="75.0" text="From user" style="-fx-background-color: #ccffeb"/>
+                                                <TableColumn fx:id="tableColumnToUser" prefWidth="75.0" text="To user" style="-fx-background-color: #66ffc2"/>
+                                                <TableColumn fx:id="tableColumnStatus" prefWidth="75.0" text="Status" style="-fx-background-color: #ccffeb"/>
+                                                <TableColumn fx:id="tableColumnDate" prefWidth="75.0" text="Date" style="-fx-background-color: #66ffc2"/>
+                                            </columns>
+                                            <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                            </columnResizePolicy>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="665.0" style="-fx-background-color: #00ff80">
+                    <children>
+                        <HBox prefHeight="34.0" prefWidth="655.0" spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0">
+                            <children>
+                                <Button onAction="#handleAddRequest" mnemonicParsing="false"  text="Send Request" />
+                                <Button onAction="#handleAcceptRequest" mnemonicParsing="false"  text="Accept Request" />
+                                <Button onAction="#handleDeclineRequest" mnemonicParsing="false"  text="Decline Request" />
+                                <Button fx:id="handleBack" mnemonicParsing="false"  text="Back" />
+                            </children>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

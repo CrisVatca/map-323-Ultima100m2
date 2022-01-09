@@ -130,18 +130,22 @@ public class UI {
                 Long idFrom = sc.nextLong();
                 System.out.println("La utilizatorul cu id-ul:");
                 Long idTo = sc.nextLong();
-                this.service.trimiteCerere(idFrom, idTo);
+                String userNameFrom = service.getById(idFrom).getUserName();
+                String userNameTo = service.getById(idTo).getUserName();
+                this.service.trimiteCerere(userNameFrom, userNameTo);
             } else if (optiune == 2) {
                 System.out.println("De la utilizatorul cu id-ul:");
                 Long idFrom = sc.nextLong();
                 System.out.println("La utilizatorul cu id-ul:");
                 Long idTo = sc.nextLong();
                 System.out.println("1.Accepta\n2.Refuza");
+                String userNameFrom = service.getById(idFrom).getUserName();
+                String userNameTo = service.getById(idTo).getUserName();
                 Integer optiune2 = sc.nextInt();
                 if (optiune2 == 1)
-                    this.service.raspundereCerere(idFrom, idTo, true);
+                    this.service.raspundereCerere(userNameFrom, userNameTo, true);
                 else if (optiune2 == 2)
-                    this.service.raspundereCerere(idFrom, idTo, false);
+                    this.service.raspundereCerere(userNameFrom, userNameTo, false);
 
             }
         } catch (KeyException | ValidationException e) {

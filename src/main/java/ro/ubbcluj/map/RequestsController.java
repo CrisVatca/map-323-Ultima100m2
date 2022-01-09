@@ -35,9 +35,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class RequestsController implements Initializable {
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String url = "jdbc:postgresql://localhost:5432/db";
     private static final String username = "postgres";
-    private static final String password = "Andreea10";
+    private static final String password = "compunere";
 
     public static Service setService(){
         UtilizatorValidator validator = new UtilizatorValidator();
@@ -91,7 +91,7 @@ public class RequestsController implements Initializable {
         tableColumnDate.setCellValueFactory(new PropertyValueFactory<Cerere, String>("date"));
         tableView.setItems(model);
 
-        handleBack.setOnAction(event -> UserDbUtils.changeScene(event, "userProfile.fxml", "All Requests", user.getUserName()));
+        handleBack.setOnAction(event -> UserDbUtils.changeScene(event, "user-profile.fxml", "UserProfile", user.getUserName()));
     }
 
     public void initModel() {
@@ -106,11 +106,6 @@ public class RequestsController implements Initializable {
 
     @FXML
     public void handleAcceptRequest(ActionEvent actionEvent) throws KeyException {
-        /*Cerere cerere = tableView.getSelectionModel().getSelectedItem();
-        if(cerere!=null){
-            service.raspundereCerere(cerere.getIdFrom(), cerere.getIdTo(), true);
-        }
-        UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());*/
         Cerere cerere = tableView.getSelectionModel().getSelectedItem();
         if(cerere!=null){
             if(cerere.getUserNameTo().equals(user.getUserName())){
@@ -118,20 +113,14 @@ public class RequestsController implements Initializable {
                     service.raspundereCerere(cerere.getUserNameFrom(), cerere.getUserNameTo(), true);
                     UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());
                 }catch (ValidationException validationException){
-                    System.out.println(validationException.toString());
+                    System.out.println(validationException.getMessage());
                 }
-
-
             }
         }
     }
+
     @FXML
     public void handleDeclineRequest(ActionEvent actionEvent) throws KeyException {
-        /*Cerere cerere = tableView.getSelectionModel().getSelectedItem();
-        if(cerere!=null){
-            service.raspundereCerere(cerere.getIdFrom(), cerere.getIdTo(), false);
-        }
-        UserDbUtils.changeScene(actionEvent, "requests.fxml", "All Requests", LogInController.getUsernameField());*/
         Cerere cerere = tableView.getSelectionModel().getSelectedItem();
         if(cerere!=null){
             if(cerere.getUserNameTo().equals(user.getUserName())){

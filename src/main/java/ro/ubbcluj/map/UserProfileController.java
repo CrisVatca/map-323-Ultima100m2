@@ -69,8 +69,6 @@ public class UserProfileController implements Initializable {
         friendRequestButton.setOnAction(event -> UserDbUtils.changeScene(event, "", "", usernameLabel.getText()));
         myFriendsButton.setOnAction(event -> {
             UserDbUtils.changeScene(event, "find-user.fxml", "FindUser", usernameLabel.getText());
-            //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(""));
-            //fxmlLoader.<LogInController>getController().setService(this.superService);
         });
     }
 

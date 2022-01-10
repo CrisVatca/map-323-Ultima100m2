@@ -1,7 +1,6 @@
 package ro.ubbcluj.map.repository.db;
 
 import ro.ubbcluj.map.domain.Message;
-import ro.ubbcluj.map.domain.Utilizator;
 import ro.ubbcluj.map.domain.validators.Validator;
 import ro.ubbcluj.map.repository.Repository;
 
@@ -16,7 +15,6 @@ public class MessageDbRepository implements Repository<Long, Message> {
     private final String url;
     private final String username;
     private final String password;
-    private Repository<Long, Utilizator> repoUtilizatori;
     private final Validator<Message> validator;
 
     public MessageDbRepository(String url, String username, String password, Validator<Message> validator) {
@@ -32,9 +30,10 @@ public class MessageDbRepository implements Repository<Long, Message> {
         String sql = "select * from messages where id = ?";
         Message mess = null;
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            statement.setLong(1,aLong);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
                 Long from = resultSet.getLong("from_user");

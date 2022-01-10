@@ -71,6 +71,9 @@ public class FindUserController implements Initializable {
     private TextField searchFriendField;
 
     @FXML
+    private Label findUserLabel;
+
+    @FXML
     private TableColumn<Utilizator, String> usernameColumn;
 
     ObservableList<Utilizator> model = FXCollections.observableArrayList();
@@ -79,6 +82,16 @@ public class FindUserController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        String usernameLog = LogInController.getUsernameField();
+        Utilizator utilizator = getUserByUsername(usernameLog);
+        if (utilizator != null) {
+            findUserLabel.setText(utilizator.getFirstName() + " " + utilizator.getLastName());
+        } else {
+            System.out.println("Utilizatorul e null!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Utilizator inexistent!");
+            alert.show();
+        }
         initModel();
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Utilizator, String>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<Utilizator, String>("lastName"));

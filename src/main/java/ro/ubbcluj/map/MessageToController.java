@@ -64,13 +64,17 @@ public class MessageToController implements Initializable {
     public void sendMessage(){
         Utilizator utilizatorTo = service.getUserAfterUserName(messageToField.getText());
         Utilizator utilizatorFrom = service.getUserAfterUserName(LogInController.getUsernameField());
-        for(Utilizator u: service.prieteniiUnuiUtilizator(utilizatorFrom.getId()).keySet())
-            if (!(u.equals(utilizatorTo))) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Utilizatorul nu va este prieten!");
-                alert.show();
-                return;
-            }
+        boolean isFriend = false;
+        for(Utilizator u: service.prieteniiUnuiUtilizator(utilizatorFrom.getId()).keySet()) {
+            if (u.equals(utilizatorTo))
+                isFriend = true;
+        }
+        if(!isFriend) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Utilizatorul nu va este prieten!");
+            alert.show();
+            return;
+        }
         String message = messageTextArea.getText();
         LocalDateTime data = LocalDateTime.now();
         service.addMessage(utilizatorFrom.getId(), utilizatorTo.getId(), message,data, Id);

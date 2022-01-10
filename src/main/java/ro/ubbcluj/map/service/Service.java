@@ -133,8 +133,8 @@ public class Service {
             Iterable<Prietenie> prietenie = this.repoPrietenie.findAll();
             Long id = 0L;
             for (Prietenie p : prietenie)
-                if (id1.equals(p.getIdU())) {
-                    if (id2.equals(p.getIdP())) {
+                if (id1.equals(p.getIdU()) || id2.equals(p.getIdU())) {
+                    if (id2.equals(p.getIdP()) || id1.equals(p.getIdP())) {
                         id = p.getId();
                         break;
                     }

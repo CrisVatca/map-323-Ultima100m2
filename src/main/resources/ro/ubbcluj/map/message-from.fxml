@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #FFD700;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.map.MessageFromController">
+   <children>
+      <TableView fx:id="messageView" prefHeight="302.0" prefWidth="500.0">
+        <columns>
+          <TableColumn fx:id="messageFromColumn" prefWidth="87.0" text="From" />
+            <TableColumn fx:id="messageToColumn" prefWidth="90.0" text="To" />
+          <TableColumn fx:id="dateColumn" prefWidth="99.0" text="Date" />
+            <TableColumn fx:id="messageColumn" prefWidth="223.0" text="Message" />
+        </columns>
+      </TableView>
+      <Button fx:id="replyButton" layoutX="363.0" layoutY="373.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Reply" textFill="#0a0909">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteMessageButton" layoutX="209.0" layoutY="373.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Delete" textFill="#0a0909">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="backButton" layoutX="45.0" layoutY="373.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Back" textFill="#0d0d0d">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

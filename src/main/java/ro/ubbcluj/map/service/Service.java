@@ -1,9 +1,6 @@
 package ro.ubbcluj.map.service;
 
-import ro.ubbcluj.map.domain.Cerere;
-import ro.ubbcluj.map.domain.Message;
-import ro.ubbcluj.map.domain.Prietenie;
-import ro.ubbcluj.map.domain.Utilizator;
+import ro.ubbcluj.map.domain.*;
 import ro.ubbcluj.map.domain.validators.ValidationException;
 import ro.ubbcluj.map.repository.Repository;
 import ro.ubbcluj.map.utils.Graph;
@@ -322,5 +319,25 @@ public class Service {
                 })
                 .collect(Collectors.toList());
         return listaConversatii;
+    }
+
+    public List<MessageGui> getMessagesOf(Utilizator utilizator){
+        Iterable<Message> messages = getAllMessages();
+        List<Message> messageList = new ArrayList<>();
+        messages.forEach(messageList::add);
+
+        messageList = messageList.stream()
+                .filter(m-> (m.getFrom().equals(utilizator.getId()) || m.getTo().equals(utilizator.getId())))
+                .collect(Collectors.toList());
+        return parseMessageToMessageGui(messageList);
+    }
+
+    private List<MessageGui> parseMessageToMessageGui(List<Message> messageList) {
+        List<MessageGui> messageGuiList = new ArrayList<>();
+        messageList.forEach(m->messageGuiList.add(new MessageGui(m.getId(),
+                this.repoUtilizatori.findOne(m.getFrom()).getUserName(),
+                this.repoUtilizatori.findOne(m.getTo()).getUserName(),
+                m.getMessage(),m.getData(),m.getReply())));
+        return messageGuiList;
     }
 }

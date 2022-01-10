@@ -44,6 +44,12 @@ public class UserProfileController implements Initializable {
     private Button myFriendsButton;
 
     @FXML
+    private Button receivedButton;
+
+    @FXML
+    private Button sendButton;
+
+    @FXML
     private Button signOutButton;
 
     @FXML
@@ -70,6 +76,8 @@ public class UserProfileController implements Initializable {
         myFriendsButton.setOnAction(event -> {
             UserDbUtils.changeScene(event, "find-user.fxml", "FindUser", usernameLabel.getText());
         });
+        receivedButton.setOnAction(event -> UserDbUtils.changeScene(event, "message-from.fxml", "MessageFrom", LogInController.getUsernameField()));
+        sendButton.setOnAction(event -> UserDbUtils.changeScene(event, "message-to.fxml", "MessageTo", LogInController.getUsernameField()));
     }
 
     private Utilizator getUserByUsername(String username){

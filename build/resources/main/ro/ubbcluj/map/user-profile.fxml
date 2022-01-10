@@ -12,11 +12,11 @@
           <Font name="Arial" size="36.0" />
         </font>
     </Label>
-    <Button fx:id="myFriendsButton" layoutX="43.0" layoutY="307.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="170.0" style="-fx-background-color: #000000;" text="Prietenii mei" textFill="WHITE">
+    <Button fx:id="myFriendsButton" layoutX="41.0" layoutY="261.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="160.0" style="-fx-background-color: #000000;" text="Prietenii mei" textFill="WHITE">
       <font>
          <Font name="Arial" size="14.0" />
       </font></Button>
-    <Button fx:id="friendRequestButton" layoutX="294.0" layoutY="307.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="159.0" style="-fx-background-color: #000000;" text="Cereri de prietenie" textFill="WHITE">
+    <Button fx:id="friendRequestButton" layoutX="286.0" layoutY="261.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="160.0" style="-fx-background-color: #000000;" text="Cereri de prietenie" textFill="WHITE">
       <font>
          <Font name="Arial" size="14.0" />
       </font></Button>
@@ -32,4 +32,14 @@
         </font>
     </Label>
     <Button fx:id="signOutButton" layoutX="434.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="67.0" style="-fx-background-color: #000000;" text="SignOut" textFill="WHITE" />
+   <Button layoutX="44.0" layoutY="360.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="160.0" style="-fx-background-color: #000000;" text="Mesaje primite" textFill="WHITE">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font>
+   </Button>
+   <Button layoutX="286.0" layoutY="360.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="160.0" style="-fx-background-color: #000000;" text="Trimite mesaj" textFill="WHITE">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font>
+   </Button>
 </AnchorPane>

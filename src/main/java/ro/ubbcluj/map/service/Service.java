@@ -212,6 +212,10 @@ public class Service {
         this.repoCerere.update(cererePrietenie);
     }
 
+    public void deleteCerere(Long id){
+        this.repoCerere.delete(id);
+    }
+
     public Iterable<Cerere> getCereri() {
         return this.repoCerere.findAll();
     }

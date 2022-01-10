@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ro.ubbcluj.map.controller.MessageAlert;
 import ro.ubbcluj.map.domain.Cerere;
 import ro.ubbcluj.map.domain.Message;
 import ro.ubbcluj.map.domain.Prietenie;
@@ -56,6 +57,15 @@ public class RequestsController implements Initializable {
     public Button handleBack;
 
     @FXML
+    public Button cancelRequestButton;
+
+    @FXML
+    private Button viewRequestsButton;
+
+    @FXML
+    private Button viewSentRequestsButton;
+
+    @FXML
     TableView<Cerere> tableView;
     @FXML
     TableColumn<Cerere,String> tableColumnFromUser;
@@ -92,6 +102,9 @@ public class RequestsController implements Initializable {
         tableView.setItems(model);
 
         handleBack.setOnAction(event -> UserDbUtils.changeScene(event, "user-profile.fxml", "UserProfile", user.getUserName()));
+        viewRequestsButton.setOnAction(event -> initModel());
+        viewSentRequestsButton.setOnAction(event -> getSentRequests());
+        cancelRequestButton.setOnAction(event -> cancelRequest());
     }
 
     public void initModel() {
@@ -125,6 +138,7 @@ public class RequestsController implements Initializable {
             }
         }
     }
+
     @FXML
     public void handleDeclineRequest(ActionEvent actionEvent) throws KeyException {
         Cerere cerere = tableView.getSelectionModel().getSelectedItem();
@@ -149,6 +163,35 @@ public class RequestsController implements Initializable {
     @FXML
     public void handleAddRequest(ActionEvent actionEvent){
         showAddRequest();
+    }
+
+    public void getSentRequests(){
+        List<Cerere> cereri = new ArrayList<>();
+        for(Cerere cerere: service.getCereri()){
+            if(cerere.getUserNameFrom().equals(user.getUserName()) && cerere.getStatus().equals("pending")){
+                cereri.add(cerere);
+            }
+        }
+        model.setAll(cereri);
+    }
+
+    public void cancelRequest(){
+        Cerere cerere= tableView.getSelectionModel().getSelectedItem();
+        if(cerere == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nu a fost selectata nicio cerere");
+            alert.show();
+            return;
+        }
+        if(cerere.getUserNameFrom().equals(user.getUserName()) && cerere.getStatus().equals("pending")) {
+            this.service.deleteCerere(cerere.getId());
+            getSentRequests();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nu se poate anula aceasta cerere");
+            alert.show();
+        }
     }
 
     public void showAddRequest(){
